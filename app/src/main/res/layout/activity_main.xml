@@ -6,14 +6,94 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <GridView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:background="#EA8484"
+        android:gravity="center"
+        android:text="Unit Converter"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textFontWeight="700"
+        android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:numColumns="3"
-        android:gravity="center"
-        android:id="@+id/grid_view"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/mySpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="#EA8484"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mySpinner">
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="100dp"
+            android:background="#EA8484"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/unit1" />
+
+        <EditText
+            android:id="@+id/enter1stUnit"
+            android:hint="Enter value"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="#EA8484"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/unit2" />
+
+        <TextView
+            android:id="@+id/enter2ndUnit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:hint="Result"
+            android:textSize="24dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/result"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="Convert"
+        android:textSize="20dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
