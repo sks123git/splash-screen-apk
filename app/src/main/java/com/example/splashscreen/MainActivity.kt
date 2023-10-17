@@ -17,10 +17,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var mySpinner3: Spinner
     lateinit var inputText: EditText
     lateinit var lengthClass: Length
+    lateinit var currencyClass: Currency
+    lateinit var temperatureClass: Temperature
     lateinit var result: Button
     lateinit var  textView: TextView
     var unitType1 = ""
     var unitType2 = ""
+    var selectedItem = ""
+    var getUnit = arrayOf("")
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
@@ -45,13 +49,25 @@ class MainActivity : AppCompatActivity() {
                         position: Int,
                         id: Long
                     ) {
-                        var selectedItem = adapterView?.getItemAtPosition(position).toString()
+                        selectedItem = adapterView?.getItemAtPosition(position).toString()
 
                         if (selectedItem == "Length") {
                             lengthClass = Length()
+                            getUnit =  lengthClass.getUnit()
                             setSpinner2()
                             setSpinner3()
-                        } else {
+                        } else if (selectedItem == "Currency") {
+                            currencyClass = Currency()
+                            getUnit = currencyClass.getUnit()
+                            setSpinner2()
+                            setSpinner3()
+                        } else if (selectedItem == "Temperature") {
+                            temperatureClass = Temperature()
+                            getUnit =  temperatureClass.getUnit()
+                            setSpinner2()
+                            setSpinner3()
+                        }
+                        else {
                             println("enter selection")
                         }
                     }
@@ -66,9 +82,17 @@ class MainActivity : AppCompatActivity() {
 
             result.setOnClickListener {
                 val input = inputText.text.toString()
-                if (unitType1 != unitType2) {
+                if (unitType1 != unitType2 && selectedItem.equals("Length")) {
                     textView.text =
                         lengthClass.calculateLength(input.toDouble(), unitType1, unitType2)
+                            .toString()
+                } else if (unitType1 != unitType2 && selectedItem.equals("Currency")) {
+                    textView.text =
+                        currencyClass.convertCurrency(input.toDouble(), unitType1, unitType2)
+                            .toString()
+                } else if (unitType1 != unitType2 && selectedItem.equals("Temperature")) {
+                    textView.text =
+                        temperatureClass.convertTemperature(input.toDouble(), unitType1, unitType2)
                             .toString()
                 } else {
                     Toast.makeText(this@MainActivity,"Enter different unit",Toast.LENGTH_LONG).show()
@@ -79,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         if (mySpinner2 != null) {
             val adapter1 = ArrayAdapter(
                 this,
-                android.R.layout.simple_spinner_item, lengthClass.getUnit()
+                android.R.layout.simple_spinner_item, getUnit
             )
             mySpinner2.adapter = adapter1
             mySpinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -93,10 +117,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setSpinner3() {
-        if (mySpinner3 != null) {
+        if (mySpinner3 != null ) {
             val adapter2 = ArrayAdapter(
                 this,
-                android.R.layout.simple_spinner_item, lengthClass.getUnit()
+                android.R.layout.simple_spinner_item, getUnit
             )
             mySpinner3.adapter = adapter2
             mySpinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

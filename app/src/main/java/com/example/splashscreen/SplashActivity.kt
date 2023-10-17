@@ -38,7 +38,7 @@ class SplashActivity : AppCompatActivity() {
 
             override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
                     startActivity(Intent(this@SplashActivity,MainActivity:: class.java))
-                finish()
+                    finish()
             }
 
             override fun onTransitionTrigger(
