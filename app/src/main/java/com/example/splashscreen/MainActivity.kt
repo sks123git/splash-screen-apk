@@ -1,7 +1,9 @@
 package com.example.splashscreen
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -21,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var temperatureClass: Temperature
     lateinit var result: Button
     lateinit var  textView: TextView
+    lateinit var addUnits: Button
+    lateinit var blob: AddQuantityModel
     var unitType1 = ""
     var unitType2 = ""
     var selectedItem = ""
@@ -50,7 +54,6 @@ class MainActivity : AppCompatActivity() {
                         id: Long
                     ) {
                         selectedItem = adapterView?.getItemAtPosition(position).toString()
-
                         if (selectedItem == "Length") {
                             lengthClass = Length()
                             getUnit =  lengthClass.getUnit()
@@ -82,21 +85,41 @@ class MainActivity : AppCompatActivity() {
 
             result.setOnClickListener {
                 val input = inputText.text.toString()
-                if (unitType1 != unitType2 && selectedItem.equals("Length")) {
-                    textView.text =
-                        lengthClass.calculateLength(input.toDouble(), unitType1, unitType2)
-                            .toString()
-                } else if (unitType1 != unitType2 && selectedItem.equals("Currency")) {
-                    textView.text =
-                        currencyClass.convertCurrency(input.toDouble(), unitType1, unitType2)
-                            .toString()
-                } else if (unitType1 != unitType2 && selectedItem.equals("Temperature")) {
-                    textView.text =
-                        temperatureClass.convertTemperature(input.toDouble(), unitType1, unitType2)
-                            .toString()
+                if (!input.isEmpty()) {
+                    if (unitType1 != unitType2 && selectedItem.equals("Length")) {
+                        textView.text =
+                            lengthClass.calculateLength(input.toDouble(), unitType1, unitType2)
+                                .toString()
+                    } else if (unitType1 != unitType2 && selectedItem.equals("Currency")) {
+                        textView.text =
+                            currencyClass.convertCurrency(input.toDouble(), unitType1, unitType2)
+                                .toString()
+                    } else if (unitType1 != unitType2 && selectedItem.equals("Temperature")) {
+                        textView.text =
+                            temperatureClass.convertTemperature(
+                                input.toDouble(),
+                                unitType1,
+                                unitType2
+                            )
+                                .toString()
+                    } else {
+                        Toast.makeText(this@MainActivity, "Enter different unit", Toast.LENGTH_LONG)
+                            .show()
+                    }
                 } else {
-                    Toast.makeText(this@MainActivity,"Enter different unit",Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MainActivity, "Enter values", Toast.LENGTH_LONG)
+                        .show()
                 }
+            }
+
+            addUnits = findViewById(R.id.add_units)
+
+            addUnits.setOnClickListener {
+                val intent = Intent(this@MainActivity,AddQuantityActivity:: class.java)
+                setBlob(inputText.text.toString())
+                intent.putExtra("data", blob)
+                Log.i("Data from", blob.inputValue.toString())
+                startActivity(intent)
             }
         }
     fun setSpinner2() {
@@ -131,5 +154,8 @@ class MainActivity : AppCompatActivity() {
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
         }
+    }
+    fun setBlob(input: String) {
+        blob = AddQuantityModel(selectedItem, unitType1, unitType2, input)
     }
 }
